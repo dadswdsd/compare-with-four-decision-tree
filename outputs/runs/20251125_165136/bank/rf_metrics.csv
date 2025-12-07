@@ -1,0 +1,2 @@
+dataset,model,accuracy,f1,roc_auc
+bank,RandomForest,0.8453731343283583,0.8425531914893617,0.9183161452093882

@@ -1,0 +1,2 @@
+dataset,model,rmse,mae,r2
+boston,RandomForest,3.5949896178346865,2.2708201754385975,0.83739237603467

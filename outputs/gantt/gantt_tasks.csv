@@ -1,0 +1,18 @@
+name,start,end,status
+Kickoff & Topic Confirmation,2025-09-01,2025-09-30,Completed
+Dataset Selection & Download,2025-09-05,2025-10-10,Completed
+EDA & Data Cleaning,2025-10-01,2025-10-20,In Progress
+Baseline Models: RF / XGB / LGBM / CB,2025-10-10,2025-10-30,Completed
+Encoding & Imbalance Strategy,2025-10-20,2025-11-10,In Progress
+Proposal Writing & Submission (DDL 11/01),2025-10-20,2025-11-01,Completed
+Tuning & Early Stopping – Round 1,2025-11-05,2025-11-25,Completed
+Main Results & Stability Check,2025-11-20,2025-12-05,In Progress
+Progress Report (DDL 12/01),2025-11-25,2025-12-01,In Progress
+Mid-term Presentation Prep,2025-12-02,2025-12-12,Pending
+January: Review / Refactor / Pipeline Hardening,2026-01-05,2026-02-10,Pending
+Semester 2: Deep Experiments & System Polish,2026-02-24,2026-03-31,Pending
+Explainability & Ablations,2026-03-01,2026-03-25,Pending
+"Final Thesis Writing (Rolling → Final, DDL 04/12)",2026-03-10,2026-04-12,Pending
+Defense Deck & Demo Preparation,2026-04-10,2026-04-20,Pending
+Oral Defense,2026-04-20,2026-04-24,Pending
+Revisions & Archival Submission (DDL 04/27),2026-04-24,2026-04-27,Pending
