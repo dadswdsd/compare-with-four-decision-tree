@@ -216,9 +216,12 @@ def run_boston(data_path):
 def run_melb(data_path):
     return run_four_models("melb", data_path)
 
+def run_credit(data_path):
+    return run_four_models("credit", data_path)
+
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--dataset", choices=["bank","boston","melb","all"], default="bank")
+    parser.add_argument("--dataset", choices=["bank","boston","melb","credit","all"], default="bank")
     parser.add_argument("--data_path", default=os.path.join(os.getcwd(), "data"))
     args = parser.parse_args()
     if args.dataset == "bank":
@@ -230,11 +233,15 @@ def main():
     elif args.dataset == "melb":
         df = run_melb(args.data_path)
         print(df)
+    elif args.dataset == "credit":
+        df = run_credit(args.data_path)
+        print(df)
     else:
         df1 = run_bank(args.data_path)
         df2 = run_boston(args.data_path)
         df3 = run_melb(args.data_path)
-        print(pd.concat([df1, df2, df3], ignore_index=True))
+        df4 = run_credit(args.data_path)
+        print(pd.concat([df1, df2, df3, df4], ignore_index=True))
 
 if __name__ == "__main__":
     main()

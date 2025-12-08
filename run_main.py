@@ -19,11 +19,11 @@ def run_one_dataset(dataset, data_path):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--dataset", choices=["bank","boston","melb","all"], default="bank")
+    parser.add_argument("--dataset", choices=["bank","boston","melb","credit","all"], default="bank")
     parser.add_argument("--data_path", default=os.path.join(os.getcwd(), "data"))
     args = parser.parse_args()
     if args.dataset == "all":
-        for ds in ["bank","boston","melb"]:
+        for ds in ["bank","boston","melb","credit"]:
             run_one_dataset(ds, args.data_path)
     else:
         run_one_dataset(args.dataset, args.data_path)

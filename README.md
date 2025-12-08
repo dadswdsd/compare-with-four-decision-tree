@@ -22,14 +22,65 @@
 - Bank Marketing（分类）：`data/bank.csv`
 - Boston Housing（回归）：`data/boston.csv`
 - Melbourne Housing（回归）：`data/melb_data.csv`
+- Credit Card Fraud（分类）：`data/creditcard.csv`
 - 说明：仓库可仅保留小样本或下载指引，完整 CSV 可因体积较大不随代码提交。
 
 ## 快速开始
-- 运行单数据集：
-  - 分类（Bank）：`python run_main.py --dataset bank --data_path data`
-  - 回归（Boston）：`python run_main.py --dataset boston --data_path data`
-  - 回归（Melbourne）：`python run_main.py --dataset melb --data_path data`
-- 批量对比：`python run_experiments.py`
+
+### 1. 环境准备
+确保已安装 Python 3.9+。
+```bash
+# 推荐使用虚拟环境
+python -m venv venv
+# Windows 激活
+.\venv\Scripts\activate
+# Linux/Mac 激活
+source venv/bin/activate
+
+# 安装依赖
+pip install -r requirements.txt
+```
+
+### 2. 运行实验与可视化
+以下命令分别针对不同数据集进行模型训练、评估并生成结果。
+
+#### (1) Bank Marketing (分类任务) - 推荐完整流程
+```bash
+# 步骤 A: 训练四种模型并生成结果 CSV
+python run_main.py --dataset bank --data_path data
+
+# 步骤 B: 生成 Accuracy 与 AUC 对比柱状图
+# (脚本会自动查找最新生成的 combined_results.csv)
+python plot_bank_comparison.py
+
+# 查看结果：
+# - 评估指标：outputs/runs/<timestamp>/bank/combined_results.csv
+# - 对比图表：outputs/runs/<timestamp>/bank/model_comparison.png
+```
+
+#### (2) Boston Housing (回归任务)
+```bash
+python run_main.py --dataset boston --data_path data
+# 结果位于：outputs/runs/<timestamp>/boston/combined_results.csv
+```
+
+#### (3) Melbourne Housing (回归任务)
+```bash
+python run_main.py --dataset melb --data_path data
+# 结果位于：outputs/runs/<timestamp>/melb/combined_results.csv
+```
+
+#### (4) Credit Card Fraud (分类任务)
+```bash
+python run_main.py --dataset credit --data_path data
+# 结果位于：outputs/runs/<timestamp>/credit/combined_results.csv
+```
+
+#### (5) 批量运行所有实验
+```bash
+python run_experiments.py
+# 此脚本会自动跑完所有数据集，并在 outputs/ 根目录下生成汇总 csv
+```
 
 ## 当前进展与结果
 - 数据划分统一为 70%/15%/15%（train/val/test），并记录类别/样本量与特征数。

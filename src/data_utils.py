@@ -87,6 +87,16 @@ def prepare_dataset(dataset, data_path):
         feature_names = pre.get_feature_names_out()
         print(f"melb split -> train:{len(X_train)} ({len(X_train)/len(X):.2%}), val:{len(X_val)} ({len(X_val)/len(X):.2%}), test:{len(X_test)} ({len(X_test)/len(X):.2%})")
         return X_train, X_val, X_test, y_train, y_val, y_test, pre, feature_names, "regression"
+    if dataset == "credit":
+        df = pd.read_csv(os.path.join(data_path, "creditcard.csv"))
+        X, y, cat_cols, num_cols = split_features(df, "Class")
+        pre = make_classifier_preprocessor(cat_cols, num_cols)
+        X_train, X_temp, y_train, y_temp = train_test_split(X, y, test_size=0.30, random_state=42, stratify=y)
+        X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.50, random_state=42, stratify=y_temp)
+        pre.fit(X_train)
+        feature_names = pre.get_feature_names_out()
+        print(f"credit split -> train:{len(X_train)} ({len(X_train)/len(X):.2%}), val:{len(X_val)} ({len(X_val)/len(X):.2%}), test:{len(X_test)} ({len(X_test)/len(X):.2%})")
+        return X_train, X_val, X_test, y_train, y_val, y_test, pre, feature_names, "classification"
     raise ValueError("unknown dataset")
 
 def ensure_run_root():
