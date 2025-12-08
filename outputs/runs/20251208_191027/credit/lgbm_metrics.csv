@@ -1,0 +1,2 @@
+dataset,model,accuracy,f1,roc_auc
+credit,LightGBM,0.9988998642385656,0.6887417218543046,0.8049254234538423

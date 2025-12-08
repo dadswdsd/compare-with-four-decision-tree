@@ -74,6 +74,9 @@ python run_main.py --dataset melb --data_path data
 ```bash
 python run_main.py --dataset credit --data_path data
 # 结果位于：outputs/runs/<timestamp>/credit/combined_results.csv
+
+# 生成对比图表（F1 Score 与 ROC AUC）
+python plot_credit_comparison.py
 ```
 
 #### (5) 批量运行所有实验

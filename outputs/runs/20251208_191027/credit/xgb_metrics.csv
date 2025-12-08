@@ -1,0 +1,2 @@
+dataset,model,accuracy,f1,roc_auc
+credit,XGBoost,0.9995786714105145,0.8695652173913043,0.9661854806410237

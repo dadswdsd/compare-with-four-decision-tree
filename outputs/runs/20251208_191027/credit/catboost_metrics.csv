@@ -1,0 +1,2 @@
+dataset,model,accuracy,f1,roc_auc
+credit,CatBoost,0.9995084499789336,0.8444444444444444,0.9657152580267381
