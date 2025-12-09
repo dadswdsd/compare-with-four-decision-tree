@@ -29,6 +29,7 @@ def plot_comparison(dataset_name, csv_path):
     models = []
     rmses = []
     r2s = []
+    maes = []
     
     try:
         with open(csv_path, 'r', newline='') as f:
@@ -37,6 +38,7 @@ def plot_comparison(dataset_name, csv_path):
                 models.append(row['model'])
                 rmses.append(float(row['rmse']))
                 r2s.append(float(row['r2']))
+                maes.append(float(row['mae']))
     except Exception as e:
         print(f"[{dataset_name}] Error reading CSV: {e}")
         return
@@ -45,42 +47,46 @@ def plot_comparison(dataset_name, csv_path):
         print(f"[{dataset_name}] No data found.")
         return
 
-    # Setup plot with 2 subplots (R2 and RMSE)
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
-    
+    # Setup plot: One grouped bar chart
+    fig, ax = plt.subplots(figsize=(12, 6))
     x = range(len(models))
+    width = 0.25
     
-    # Plot R2 (Higher is better)
-    bars1 = ax1.bar(x, r2s, color='#2ca02c')
-    ax1.set_title(f'{dataset_name.capitalize()} - R² Score (Higher is Better)')
-    ax1.set_xticks(x)
-    ax1.set_xticklabels(models)
-    ax1.set_ylim(min(r2s) * 0.9 if min(r2s) > 0 else 0, max(r2s) * 1.05)
-    ax1.grid(axis='y', linestyle='--', alpha=0.7)
+    rects1 = ax.bar([i - width for i in x], rmses, width, label='RMSE', color='#d62728')
+    rects2 = ax.bar(x, r2s, width, label='R²', color='#2ca02c')
+    rects3 = ax.bar([i + width for i in x], maes, width, label='MAE', color='#1f77b4')
     
-    # Label R2
-    for bar in bars1:
-        height = bar.get_height()
-        ax1.annotate(f'{height:.4f}',
-                    xy=(bar.get_x() + bar.get_width() / 2, height),
-                    xytext=(0, 3), textcoords="offset points",
-                    ha='center', va='bottom')
+    ax.set_ylabel('Score')
+    ax.set_title(f'Model Comparison: RMSE, R², MAE ({dataset_name.capitalize()} Dataset)')
+    ax.set_xticks(x)
+    ax.set_xticklabels(models)
+    
+    # Calculate limits to accommodate all bars properly
+    all_values = rmses + r2s + maes
+    min_val = min(all_values)
+    max_val = max(all_values)
+    
+    # Add a bit of padding
+    if min_val < 0:
+        ax.set_ylim(min_val * 1.1, max_val * 1.1)
+    else:
+        ax.set_ylim(0, max_val * 1.1)
 
-    # Plot RMSE (Lower is better)
-    bars2 = ax2.bar(x, rmses, color='#d62728')
-    ax2.set_title(f'{dataset_name.capitalize()} - RMSE (Lower is Better)')
-    ax2.set_xticks(x)
-    ax2.set_xticklabels(models)
-    ax2.set_ylim(0, max(rmses) * 1.1)
-    ax2.grid(axis='y', linestyle='--', alpha=0.7)
+    ax.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+    ax.grid(axis='y', linestyle='--', alpha=0.3)
     
-    # Label RMSE
-    for bar in bars2:
-        height = bar.get_height()
-        ax2.annotate(f'{height:.4f}',
-                    xy=(bar.get_x() + bar.get_width() / 2, height),
-                    xytext=(0, 3), textcoords="offset points",
-                    ha='center', va='bottom')
+    # Label bars
+    def autolabel(rects):
+        for rect in rects:
+            height = rect.get_height()
+            ax.annotate(f'{height:.4f}',
+                        xy=(rect.get_x() + rect.get_width() / 2, height),
+                        xytext=(0, 3), textcoords="offset points",
+                        ha='center', va='bottom', fontsize=8, rotation=0)
+
+    autolabel(rects1)
+    autolabel(rects2)
+    autolabel(rects3)
 
     plt.tight_layout()
     

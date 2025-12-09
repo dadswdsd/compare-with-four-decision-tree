@@ -31,7 +31,7 @@ def plot_comparison(csv_path, output_path):
     print(f"Reading data from: {csv_path}")
     # Read data using csv module
     models = []
-    accuracies = []
+    f1_scores = []
     roc_aucs = []
     
     try:
@@ -39,7 +39,7 @@ def plot_comparison(csv_path, output_path):
             reader = csv.DictReader(f)
             for row in reader:
                 models.append(row['model'])
-                accuracies.append(float(row['accuracy']))
+                f1_scores.append(float(row['f1']))
                 roc_aucs.append(float(row['roc_auc']))
     except Exception as e:
         print(f"Error reading CSV: {e}")
@@ -54,12 +54,12 @@ def plot_comparison(csv_path, output_path):
     width = 0.35
     
     fig, ax = plt.subplots(figsize=(10, 6))
-    rects1 = ax.bar([i - width/2 for i in x], accuracies, width, label='Accuracy', color='#1f77b4')
+    rects1 = ax.bar([i - width/2 for i in x], f1_scores, width, label='F1-Score', color='#1f77b4')
     rects2 = ax.bar([i + width/2 for i in x], roc_aucs, width, label='ROC AUC', color='#ff7f0e')
     
     # Add labels and title
     ax.set_ylabel('Score')
-    ax.set_title('Model Comparison: Accuracy vs ROC AUC (Bank Dataset)')
+    ax.set_title('Model Comparison: F1-Score vs ROC AUC (Bank Dataset)')
     ax.set_xticks(x)
     ax.set_xticklabels(models)
     ax.set_ylim(0.8, 0.95)
